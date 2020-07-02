@@ -8,7 +8,5 @@ func _on_JoinButton_pressed():
 	var port := int($ServerPortInput.text)
 	network.my_player_info.name = $PlayerNameInput.text
 	network.my_player_info.color = $ColorPickerButton.color
-	if network.join_server(server_address, port):
-		# warning-ignore:return_value_discarded
-		get_tree().change_scene_to(game_scene)
+	network.join_server(server_address, port)
 	

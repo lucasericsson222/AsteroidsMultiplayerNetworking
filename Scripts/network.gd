@@ -3,6 +3,7 @@ signal mv_player(player_obj)
 signal add_asteroids(id)
 var player_resource = preload("res://Player.tscn")
 var menu_scene = preload("res://Menu/MultiplayerMenu.tscn")
+var game_scene = preload("res://game_root.tscn")
 var server_info = {
 	name = "Server",
 	max_players = 0,
@@ -41,6 +42,7 @@ func _on_player_disconnected(id: int):
 	rpc("delete_other_player", id)
 	
 func _on_connected_to_server():
+	get_tree().change_scene_to(game_scene)
 	print("Connected to server")
 
 func _on_connection_failed():
@@ -53,8 +55,8 @@ func _on_disconnected_from_server():
 	
 func create_new_server():
 	var net = NetworkedMultiplayerENet.new()
-	
-	if (!net.create_server(server_info.used_port, server_info.max_players)):
+	var error = net.create_server(server_info.used_port, server_info.max_players)
+	if error:
 		print("Failed to create server")
 		return false
 		
@@ -62,12 +64,9 @@ func create_new_server():
 	print("Server created Successfully")
 	return true
 	
-func join_server(ip, port: int) -> bool:
+func join_server(ip, port: int):
 	var net = NetworkedMultiplayerENet.new()
-	
-	if !net.create_client(ip, port):
-		print("Failed to create client")
-		return false
+	net.create_client(ip, port)
 	
 	get_tree().set_network_peer(net)
 	print("Client Created Successfully")
