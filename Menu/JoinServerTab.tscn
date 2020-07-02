@@ -1,0 +1,67 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts/JoinServerTab.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/ColorPickerButton.gd" type="Script" id=2]
+
+[node name="JoinServerTab" type="VBoxContainer"]
+margin_top = 332.0
+margin_right = 340.0
+margin_bottom = 514.0
+custom_constants/separation = 8
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ServerAddressLabel" type="Label" parent="."]
+margin_right = 340.0
+margin_bottom = 14.0
+text = "Server Address"
+valign = 1
+
+[node name="ServerAddressInput" type="LineEdit" parent="."]
+margin_top = 22.0
+margin_right = 340.0
+margin_bottom = 46.0
+
+[node name="ServerPortLabel" type="Label" parent="."]
+margin_top = 54.0
+margin_right = 340.0
+margin_bottom = 68.0
+text = "Server Port"
+
+[node name="ServerPortInput" type="LineEdit" parent="."]
+margin_top = 76.0
+margin_right = 340.0
+margin_bottom = 100.0
+
+[node name="PlayerNameLabel" type="Label" parent="."]
+margin_top = 108.0
+margin_right = 340.0
+margin_bottom = 122.0
+text = "Player Name"
+
+[node name="PlayerNameInput" type="LineEdit" parent="."]
+margin_top = 130.0
+margin_right = 340.0
+margin_bottom = 154.0
+
+[node name="ColorLabel" type="Label" parent="."]
+margin_top = 162.0
+margin_right = 340.0
+margin_bottom = 176.0
+text = "Player Color"
+
+[node name="ColorPickerButton" type="ColorPickerButton" parent="."]
+margin_top = 184.0
+margin_right = 340.0
+margin_bottom = 204.0
+color = Color( 0.313726, 0.85098, 0.537255, 1 )
+script = ExtResource( 2 )
+
+[node name="JoinButton" type="Button" parent="."]
+margin_top = 212.0
+margin_right = 340.0
+margin_bottom = 232.0
+text = "Join Server"
+[connection signal="pressed" from="JoinButton" to="." method="_on_JoinButton_pressed"]
