@@ -7,8 +7,10 @@ puppet var pos = Vector2(0,0)
 var rot_speed = rand_range(1,6)
 var movement_speed = rand_range(150, 500)
 var start_rot = rand_range(0, 2 * PI)
+var color = Color(1,1,1)
 
 func _ready():
+	modulate = color
 	randomize()
 	if !is_network_master():
 		rotation = rot

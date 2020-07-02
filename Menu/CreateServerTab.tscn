@@ -24,6 +24,7 @@ text = "Server Port"
 margin_top = 22.0
 margin_right = 340.0
 margin_bottom = 46.0
+text = "1234"
 
 [node name="MaxPlayersLabel" type="Label" parent="."]
 margin_top = 54.0
@@ -36,6 +37,7 @@ text = "Max Number Of Players"
 margin_top = 76.0
 margin_right = 340.0
 margin_bottom = 100.0
+text = "12"
 
 [node name="ServerNameLabel" type="Label" parent="."]
 margin_top = 108.0
@@ -48,6 +50,7 @@ text = "Server Name"
 margin_top = 130.0
 margin_right = 340.0
 margin_bottom = 154.0
+text = "TestServer"
 
 [node name="PlayerNameLabel" type="Label" parent="."]
 margin_top = 162.0
@@ -59,6 +62,7 @@ text = "Player Name"
 margin_top = 184.0
 margin_right = 340.0
 margin_bottom = 208.0
+text = "ServerPlayer"
 
 [node name="ColorLabel" type="Label" parent="."]
 margin_top = 216.0

@@ -23,6 +23,7 @@ valign = 1
 margin_top = 22.0
 margin_right = 340.0
 margin_bottom = 46.0
+text = "localhost"
 
 [node name="ServerPortLabel" type="Label" parent="."]
 margin_top = 54.0
@@ -34,6 +35,7 @@ text = "Server Port"
 margin_top = 76.0
 margin_right = 340.0
 margin_bottom = 100.0
+text = "1234"
 
 [node name="PlayerNameLabel" type="Label" parent="."]
 margin_top = 108.0
@@ -45,6 +47,7 @@ text = "Player Name"
 margin_top = 130.0
 margin_right = 340.0
 margin_bottom = 154.0
+text = "ClientPlayer"
 
 [node name="ColorLabel" type="Label" parent="."]
 margin_top = 162.0

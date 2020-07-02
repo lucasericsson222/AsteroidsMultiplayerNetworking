@@ -2,6 +2,7 @@ extends Node
 signal mv_player(player_obj)
 signal add_asteroids(id)
 var player_resource = preload("res://Player.tscn")
+var menu_scene = preload("res://Menu/MultiplayerMenu.tscn")
 var server_info = {
 	name = "Server",
 	max_players = 0,
@@ -34,45 +35,43 @@ func _on_player_connected(id: int):
 	print(id, my_player_info.name)
 	print("\n")
 	
-	
-	
-	
-	
 
 func _on_player_disconnected(id: int):
 	player_info.erase(id)
+	rpc("delete_other_player", id)
 	
 func _on_connected_to_server():
 	print("Connected to server")
-	pass
 
 func _on_connection_failed():
 	print("Connection failed")
-	pass
 	
 func _on_disconnected_from_server():
 	print("Disconnected from server")
-	pass
+# warning-ignore:return_value_discarded
+	get_tree().change_scene_to(menu_scene)
 	
 func create_new_server():
 	var net = NetworkedMultiplayerENet.new()
 	
-	if (net.create_server(server_info.used_port, server_info.max_players) != OK):
+	if (!net.create_server(server_info.used_port, server_info.max_players)):
 		print("Failed to create server")
-		return
+		return false
 		
 	get_tree().set_network_peer(net)
 	print("Server created Successfully")
+	return true
 	
-func join_server(ip, port: int):
+func join_server(ip, port: int) -> bool:
 	var net = NetworkedMultiplayerENet.new()
 	
-	if net.create_client(ip, port) != OK:
+	if !net.create_client(ip, port):
 		print("Failed to create client")
-		return
-		
+		return false
+	
 	get_tree().set_network_peer(net)
 	print("Client Created Successfully")
+	return true
 
 remote func register_player(info):
 	var id: int = get_tree().get_rpc_sender_id()
@@ -98,3 +97,8 @@ func create_own_player():
 	new_player.name = String(get_tree().get_network_unique_id())
 	add_child(new_player)
 	emit_signal("mv_player", new_player)
+
+remotesync func delete_other_player(id):
+	for c in network.get_children():
+		if c.name == String(id):
+			c.queue_free()
