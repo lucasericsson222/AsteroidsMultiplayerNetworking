@@ -16,12 +16,12 @@ _global_script_class_icons={
 [application]
 
 config/name="NetworkingProject"
-run/main_scene="res://Menu/MultiplayerMenu.tscn"
+run/main_scene="res://Menu/Multiplayer_Menu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-network="*res://Scripts/network.gd"
+network="*res://Network/Network.gd"
 
 [display]
 

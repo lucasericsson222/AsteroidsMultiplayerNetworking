@@ -1,9 +1,9 @@
 extends Node
 signal mv_player(player_obj)
 signal add_asteroids(id)
-var player_resource = preload("res://Player.tscn")
-var menu_scene = preload("res://Menu/MultiplayerMenu.tscn")
-var game_scene = preload("res://game_root.tscn")
+var player_resource = preload("res://Player/Player.tscn")
+var menu_scene = preload("res://Menu/Multiplayer_Menu.tscn")
+var game_scene = preload("res://Lobby/Lobby.tscn")
 var server_info = {
 	name = "Server",
 	max_players = 0,
