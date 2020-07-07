@@ -1,15 +1,15 @@
 extends Sprite
 
-signal not_grabbing(name)
 onready var screen_size = get_viewport_rect().size
 puppet var pos: Vector2 
 puppet var rot = 0
 var rot_speed = 10
-var engine_speed = 200
-
+var engine_speed = 400
+var throw_speed = 600
 var current_momentum = Vector2(0,0)
 var player_color = Color.white
-
+var has_asteroid = false
+var asteroid_script = preload("res://Asteroid/Asteroid.gd")
 func _ready():
 	self.modulate = player_color
 	
@@ -46,8 +46,9 @@ remotesync func process_input(rot_input, engine_input, grab_input, delta):
 		var result = space_state.intersect_ray(self.position, Vector2(0,-1000000).rotated(self.rotation), [$KinematicBody2D])
 		if !result.empty():
 			link_asteroid(result)
-	else:
-		emit_signal("not_grabbing", name)
+	elif has_asteroid:
+		signal_emitter.emit_signal("not_grabbing", name, rotation, throw_speed)
+		has_asteroid = false
 
 func screen_wrap():
 	position.x = wrapf(position.x, 0, screen_size.x)
@@ -55,4 +56,8 @@ func screen_wrap():
 
 
 func link_asteroid(result):
-	result["collider"].get_parent().grabbing_player_name = name
+	var collision = result["collider"].get_parent()
+	if(collision is asteroid_script):
+		collision.grabbing_player_name = name
+		collision.color = player_color
+		has_asteroid = true

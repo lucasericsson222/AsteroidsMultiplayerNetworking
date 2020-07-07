@@ -22,6 +22,7 @@ config/icon="res://icon.png"
 [autoload]
 
 network="*res://Network/Network.gd"
+signal_emitter="*res://Signal_Emitter/Signal_Emitter.gd"
 
 [display]
 

@@ -42,7 +42,6 @@ func _on_player_disconnected(id: int):
 	rpc("delete_other_player", id)
 	
 func _on_connected_to_server():
-	get_tree().change_scene_to(game_scene)
 	print("Connected to server")
 
 func _on_connection_failed():
@@ -75,18 +74,14 @@ func join_server(ip, port: int):
 remote func register_player(info):
 	var id: int = get_tree().get_rpc_sender_id()
 	player_info[id] = info
-	var my_label = Label.new()
-	my_label.text = String(id) + info.name
-	add_child(my_label)
 	print("func register_player:     ")
 	print(info.name)
 	
 	var new_player = player_resource.instance()
 	new_player.player_color = info.color
 	new_player.name = String(id)
-
-	
 	add_child(new_player)
+	
 	emit_signal("mv_player", new_player)
 	emit_signal("add_asteroids", id)
 
