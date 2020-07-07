@@ -12,6 +12,7 @@ texture = ExtResource( 2 )
 script = ExtResource( 1 )
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+input_pickable = true
 __meta__ = {
 "_edit_lock_": true
 }
