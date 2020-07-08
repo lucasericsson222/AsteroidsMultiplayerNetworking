@@ -50,6 +50,8 @@ func _on_connection_failed():
 func _on_disconnected_from_server():
 	print("Disconnected from server")
 # warning-ignore:return_value_discarded
+	for c in network.get_children():
+		c.queue_free()
 	get_tree().change_scene_to(menu_scene)
 	
 func create_new_server():

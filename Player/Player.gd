@@ -15,10 +15,11 @@ func _ready():
 	
 func _process(delta):
 	if (name == String(get_tree().get_network_unique_id())):
-		var rot_input = int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left"))
-		var engine_input = int(Input.is_action_pressed("ui_up"))
-		var grab_input = Input.is_action_pressed("Grab")
-		rpc_id(get_network_master(), "process_input", rot_input, engine_input,grab_input, delta)
+		var rot_right_input = int(Input.is_action_pressed("game_right"))
+		var rot_left_input = (Input.is_action_pressed("game_left"))
+		var engine_input = int(Input.is_action_pressed("game_up"))
+		var grab_input = Input.is_action_pressed("game_grab")
+		rpc_id(get_network_master(), "process_input", rot_right_input, rot_left_input, engine_input,grab_input, delta)
 	if !is_network_master():
 		position = pos
 		rotation = rot
@@ -27,11 +28,14 @@ func _process(delta):
 		rset("rot", rotation)
 
 
-remotesync func process_input(rot_input, engine_input, grab_input, delta):
+remotesync func process_input(rot_right_input, rot_left_input, engine_input, grab_input, delta):
 	if !is_network_master():
 		return
 	$Asteroid_Holding_Position.rotation = rotation
-	rotation += rot_speed * delta * rot_input
+	if rot_right_input:
+		rotation += rot_speed * delta 
+	if rot_left_input:
+		rotation -= rot_speed * delta
 	rset_unreliable("rot", rotation)
 	
 	var current_movement = Vector2(0, -engine_input)
