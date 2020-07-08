@@ -9,5 +9,6 @@ func _on_JoinButton_pressed():
 	network.my_player_info.name = $Player_Name_Input.text
 	network.my_player_info.color = $Color_Picker_Button.color
 	network.join_server(server_address, port)
+# warning-ignore:return_value_discarded
 	get_tree().change_scene_to(lobby_scene)
 	

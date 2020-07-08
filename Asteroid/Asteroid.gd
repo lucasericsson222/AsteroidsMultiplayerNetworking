@@ -61,6 +61,7 @@ func screen_wrap():
 
 func _on_not_grabbing(player_name, dir, throw_speed):
 	if (grabbing_player_name == player_name):
+		get_node("/root/network/" + player_name).engine_speed *= -1
 		grabbing_player_name = ""
 		movement_speed = throw_speed
 		start_rot = dir + PI
