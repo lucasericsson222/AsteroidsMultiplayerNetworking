@@ -4,6 +4,7 @@ signal add_asteroids(id)
 var player_resource = preload("res://Player/Player.tscn")
 var menu_scene = preload("res://Menu/Multiplayer_Menu.tscn")
 var game_scene = preload("res://Lobby/Lobby.tscn")
+var death_scene = preload("res://Player_Death/Player_Death.tscn")
 var server_info = {
 	name = "Server",
 	max_players = 0,
@@ -96,5 +97,9 @@ func create_own_player():
 
 remotesync func delete_other_player(id):
 	for c in network.get_children():
-		if c.name == String(id):
-			c.queue_free()
+		if c.is_in_group("player") :
+			if c.name == String(id):
+				c.queue_free()
+		if c.is_in_group("player_death"):
+			if c.dead_player == String(id):
+				c.queue_free()

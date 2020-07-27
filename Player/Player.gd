@@ -1,5 +1,8 @@
 extends Sprite
 
+var death_scene = preload("res://Player_Death/Player_Death.tscn")
+
+
 onready var screen_size = get_viewport_rect().size
 puppet var pos: Vector2 
 puppet var rot = 0
@@ -72,3 +75,17 @@ func link_asteroid(result):
 		collision.grabbing_player_name = name
 		collision.color = player_color
 		has_asteroid = true
+
+
+func _on_death():
+	var death = death_scene.instance()
+	death.dead_player = name
+	death.position = position
+	death.dead_color = player_color
+	get_parent().add_child(death)
+	queue_free()
+	
+
+
+func _on_KinematicBody2D_body_entered(body):
+	_on_death()
