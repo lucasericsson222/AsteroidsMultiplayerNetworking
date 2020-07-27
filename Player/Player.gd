@@ -14,10 +14,14 @@ var player_color = Color.white
 var has_asteroid = false
 var throw_recoil = 25
 var asteroid_script = preload("res://Asteroid/Asteroid.gd")
+var old_positon = 0
+var last_delta = 0.02
+
 func _ready():
 	self.modulate = player_color
 	
 func _process(delta):
+	old_positon = global_position
 	if (name == String(get_tree().get_network_unique_id())):
 		var rot_right_input = int(Input.is_action_pressed("game_right"))
 		var rot_left_input = (Input.is_action_pressed("game_left"))
@@ -30,6 +34,7 @@ func _process(delta):
 	else:
 		rset("pos", position)
 		rset("rot", rotation)
+	last_delta = delta
 
 
 remotesync func process_input(rot_right_input, rot_left_input, engine_input, grab_input, delta):
@@ -77,15 +82,16 @@ func link_asteroid(result):
 		has_asteroid = true
 
 
-func _on_death():
+remotesync func _on_death():
 	var death = death_scene.instance()
 	death.dead_player = name
 	death.position = position
 	death.dead_color = player_color
 	get_parent().add_child(death)
+	signal_emitter.emit_signal("not_grabbing", name, (global_position-old_positon).angle()+90, (global_position-old_positon).length() / last_delta)
 	queue_free()
 	
 
 
 func _on_KinematicBody2D_body_entered(body):
-	_on_death()
+	rpc("_on_death")
