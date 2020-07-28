@@ -79,6 +79,7 @@ func process_input(delta):
 	var collision = move_and_collide(current_momentum)
 	if collision:
 		current_momentum = current_momentum.slide(collision.normal)
+		process_collision(collision)
 	screen_wrap()
 	rset_unreliable("pos", position)
 	
@@ -117,5 +118,9 @@ remotesync func _on_death():
 	
 
 
-func _on_KinematicBody2D_body_entered(_body):
-	rpc("_on_death")
+
+func process_collision(collision):
+	if (collision.collider.is_in_group("asteroid")):
+		rpc("_on_death")
+		
+	
