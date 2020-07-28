@@ -27,7 +27,7 @@ damping = 1.0
 damping_random = 0.5
 angle = 200.7
 angle_random = 0.98
-scale = 0.04
+scale = 0.08
 color_ramp = SubResource( 2 )
 
 [sub_resource type="DynamicFont" id=4]
@@ -95,6 +95,7 @@ process_material = SubResource( 3 )
 texture = ExtResource( 2 )
 
 [node name="Death_Respawn_Timer" type="Timer" parent="."]
+wait_time = 5.0
 one_shot = true
 autostart = true
 

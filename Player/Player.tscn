@@ -4,28 +4,23 @@
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
-points = PoolVector2Array( 0, -500, 250, 0, -250, 0 )
+points = PoolVector2Array( 0, -40, 20, 0, -20, 0 )
 
-[node name="Player" type="Sprite" groups=[
+[node name="Player" type="KinematicBody2D" groups=[
 "player",
 ]]
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( -0.00167656, 19.988 )
+shape = SubResource( 1 )
+
+[node name="Asteroid_Holding_Position" type="Position2D" parent="."]
+position = Vector2( -0.000716175, -160.348 )
+rotation = -4.46638e-06
+scale = Vector2( 0.08, 0.08 )
+
+[node name="Sprite" type="Sprite" parent="."]
 rotation = -6.28319
 scale = Vector2( 0.08, 0.08 )
 texture = ExtResource( 1 )
-script = ExtResource( 2 )
-
-[node name="KinematicBody2D" type="Area2D" parent="."]
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
-position = Vector2( -0.0041008, 249.977 )
-shape = SubResource( 1 )
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Asteroid_Holding_Position" type="Position2D" parent="."]
-position = Vector2( 0, -2004.35 )
-[connection signal="body_entered" from="KinematicBody2D" to="." method="_on_KinematicBody2D_body_entered"]

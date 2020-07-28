@@ -61,7 +61,7 @@ func screen_wrap():
 
 func _on_not_grabbing(player_name, dir, throw_speed):
 	if (grabbing_player_name == player_name):
-		get_node("/root/network/" + player_name).engine_speed *= -1
-		grabbing_player_name = ""
-		movement_speed = throw_speed
+		get_node("/root/network/" + player_name).engine_speed *= -1 # tell players to go backwards
+		grabbing_player_name = "" # stop being connected to the player
+		movement_speed = throw_speed # start moving in direction thrown
 		start_rot = dir + PI

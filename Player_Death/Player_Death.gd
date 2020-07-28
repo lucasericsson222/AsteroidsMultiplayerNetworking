@@ -8,10 +8,12 @@ var dead_player = ""
 
 var dead_color = Color.white
 
+func _ready():
+	$Death_Particles.emitting = true
+	$Death_Particles.modulate = dead_color
+	$Label.modulate = dead_color
 
-
-
-func _process(delta):
+func _process(_delta):
 	if(is_network_master()):
 		rset("countdown", int($Death_Respawn_Timer.time_left))
 		countdown = int($Death_Respawn_Timer.time_left)
