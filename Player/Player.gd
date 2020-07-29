@@ -113,7 +113,7 @@ remotesync func _on_death():
 	death.position = position
 	death.dead_color = player_color
 	get_parent().add_child(death)
-	signal_emitter.emit_signal("not_grabbing", name, (global_position-old_positon).angle()+90, (global_position-old_positon).length() / last_delta)
+	signal_emitter.emit_signal("not_grabbing", name, (global_position-old_positon).angle()+PI/2, (global_position-old_positon).length() / last_delta)
 	queue_free()
 	
 
