@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Asteroid2.png-dc073ef258d6aa3eb3748aa33cbaec96.stex"
+path="res://.import/bomb.png-fccde257f88b812fbc792729002a8bff.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Throwables/Bomb/Sprites/Asteroid2.png"
-dest_files=[ "res://.import/Asteroid2.png-dc073ef258d6aa3eb3748aa33cbaec96.stex" ]
+source_file="res://Throwables/Bomb/Sprites/bomb.png"
+dest_files=[ "res://.import/bomb.png-fccde257f88b812fbc792729002a8bff.stex" ]
 
 [params]
 

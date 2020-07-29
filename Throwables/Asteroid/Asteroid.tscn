@@ -8,6 +8,7 @@ radius = 184.065
 
 [node name="KinematicBody2D" type="KinematicBody2D" groups=[
 "asteroid",
+"throwable",
 ]]
 scale = Vector2( 0.3, 0.3 )
 input_pickable = true

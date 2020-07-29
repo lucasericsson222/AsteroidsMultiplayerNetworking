@@ -105,7 +105,7 @@ func screen_wrap():
 
 func link_asteroid(result):
 	var collision = result["collider"]
-	if(collision.is_in_group("asteroid")):
+	if(collision.is_in_group("throwable")):
 		collision.grabbing_player_name = name
 		collision.color = player_color
 		has_asteroid = true
