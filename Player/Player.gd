@@ -50,11 +50,12 @@ func _process(delta):
 
 
 func _physics_process(delta):
+	if grab_input:
+		$rect.show()
+	else:
+		$rect.hide()
+	$Particles2D.emitting = bool(engine_input)
 	if (is_network_master()):
-		if grab_input:
-			$rect.show()
-		else:
-			$rect.hide()
 		process_input(delta)
 
 func process_input(delta):
