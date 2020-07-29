@@ -1,4 +1,4 @@
-extends Sprite
+extends KinematicBody2D
 
 var id
 
@@ -8,7 +8,7 @@ var rot_speed = rand_range(1,6)
 var movement_speed = rand_range(150, 500)
 var start_rot = rand_range(0, 2 * PI)
 puppet var color = Color(1,1,1)
-
+onready var screen_size = get_viewport_rect().size
 enum states {
 	ROAMING,
 	GRABBED
@@ -16,6 +16,7 @@ enum states {
 var state = states.ROAMING
 var grabbing_player_name = ""
 func _ready():
+# warning-ignore:return_value_discarded
 	signal_emitter.connect("not_grabbing", self, "_on_not_grabbing")
 	
 	randomize()
@@ -32,7 +33,6 @@ func _process(delta):
 	if !is_network_master():
 		rotation = rot
 		position = pos
-
 	else:
 		if grabbing_player_name == "":
 			state = states.ROAMING
@@ -44,7 +44,12 @@ func _process(delta):
 			position += new_movement * delta
 		elif state == states.GRABBED:
 			var path = "/root/network/" + grabbing_player_name + "/Asteroid_Holding_Position"
-			position = get_node(path).global_position
+			if grabbing_player_name != "":
+				var new_position = get_node(path).global_position
+				if ((new_position - position).length() < screen_size.y):
+					position = lerp(position,new_position , 0.3)
+				else: 
+					position = new_position
 			rset("color", color)
 			
 		screen_wrap()
@@ -52,7 +57,7 @@ func _process(delta):
 		rset("pos", position)
 		rset("rot", rotation)
 
-onready var screen_size = get_viewport_rect().size
+
 
 func screen_wrap():
 	position.x = wrapf(position.x, -50, screen_size.x + 50)

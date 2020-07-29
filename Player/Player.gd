@@ -13,7 +13,6 @@ var current_momentum = Vector2(0,0)
 var player_color = Color.white
 var has_asteroid = false
 var throw_recoil = 25
-var asteroid_script = preload("res://Asteroid/Asteroid.gd")
 var old_positon = 0
 var last_delta = 0.02
 
@@ -29,6 +28,7 @@ remotesync var grab_input = false
 
 func _ready():
 	self.modulate = player_color
+	$rect.hide()
 	
 func _process(delta):
 	old_positon = global_position
@@ -51,6 +51,10 @@ func _process(delta):
 
 func _physics_process(delta):
 	if (is_network_master()):
+		if grab_input:
+			$rect.show()
+		else:
+			$rect.hide()
 		process_input(delta)
 
 func process_input(delta):
@@ -78,7 +82,6 @@ func process_input(delta):
 	# apply movement
 	var collision = move_and_collide(current_momentum)
 	if collision:
-		current_momentum = current_momentum.slide(collision.normal)
 		process_collision(collision)
 	screen_wrap()
 	rset_unreliable("pos", position)
@@ -87,7 +90,7 @@ func process_input(delta):
 	if grab_input and !has_asteroid: # bool flag has_asteroid prevents checking tons of times
 		# raycast in front to grab asteroid
 		var space_state = get_world_2d().direct_space_state
-		var result = space_state.intersect_ray(self.position, Vector2(0,-1000000).rotated(self.rotation), [self])
+		var result = space_state.intersect_ray(self.position, self.position + $Laser_End.position.rotated(self.rotation), [self])
 		if !result.empty():
 			link_asteroid(result)
 	elif has_asteroid and !grab_input:
@@ -100,8 +103,8 @@ func screen_wrap():
 
 
 func link_asteroid(result):
-	var collision = result["collider"].get_parent()
-	if(collision is asteroid_script):
+	var collision = result["collider"]
+	if(collision.is_in_group("asteroid")):
 		collision.grabbing_player_name = name
 		collision.color = player_color
 		has_asteroid = true
@@ -113,7 +116,6 @@ remotesync func _on_death():
 	death.position = position
 	death.dead_color = player_color
 	get_parent().add_child(death)
-	signal_emitter.emit_signal("not_grabbing", name, (global_position-old_positon).angle()+PI/2, (global_position-old_positon).length() / last_delta)
 	queue_free()
 	
 
@@ -121,6 +123,8 @@ remotesync func _on_death():
 
 func process_collision(collision):
 	if (collision.collider.is_in_group("asteroid")):
+		signal_emitter.emit_signal("not_grabbing", name, (global_position-old_positon).angle()  + PI/2, (global_position-old_positon).length() / last_delta)
 		rpc("_on_death")
-		
+	else:
+		current_momentum = current_momentum.slide(collision.normal)
 	

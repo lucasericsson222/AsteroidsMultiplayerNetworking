@@ -1,6 +1,6 @@
 extends Node2D
 
-var asteroid_scene = preload("res://Asteroid/Asteroid.tscn")
+var asteroid_scene = preload("res://Throwables/Asteroid/Asteroid.tscn")
 
 var id_counter = 0
 

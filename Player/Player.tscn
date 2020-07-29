@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Player/Sprites/Player.png" type="Texture" id=1]
 [ext_resource path="res://Player/Player.gd" type="Script" id=2]
+[ext_resource path="res://Player/Sprites/rect.png" type="Texture" id=3]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, -40, 20, 0, -20, 0 )
@@ -16,7 +17,19 @@ position = Vector2( -0.00167656, 19.988 )
 shape = SubResource( 1 )
 
 [node name="Asteroid_Holding_Position" type="Position2D" parent="."]
-position = Vector2( -0.000716175, -160.348 )
+position = Vector2( 0, -160 )
+rotation = -4.46638e-06
+scale = Vector2( 0.08, 0.08 )
+
+[node name="rect" type="Sprite" parent="."]
+self_modulate = Color( 0.254902, 0.254902, 0.254902, 1 )
+position = Vector2( 1.84518e-08, -166.669 )
+rotation = -4.46638e-06
+scale = Vector2( 0.0800214, 4.87158 )
+texture = ExtResource( 3 )
+
+[node name="Laser_End" type="Position2D" parent="."]
+position = Vector2( 0, -320 )
 rotation = -4.46638e-06
 scale = Vector2( 0.08, 0.08 )
 
